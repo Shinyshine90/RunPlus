@@ -1,2 +1,5 @@
+
 include ':app'
-rootProject.name = "RunPlus"
+include ':component:map'
+include ':libs:amap'
+

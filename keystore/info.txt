@@ -1,0 +1,9 @@
+RELEASE:
+alias runplus
+password android
+sha1 D1:C3:4D:70:D6:64:35:81:9A:6A:F8:4C:B6:11:B6:EA:DD:DF:CD:07
+
+DEBUG:
+alias androiddebugkey
+password android
+sha1 7C:A9:00:27:C0:9B:DA:BE:7F:B2:4B:88:D3:5F:96:52:89:08:04:52
