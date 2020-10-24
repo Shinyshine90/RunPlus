@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-aspectjx'
 
 android {
 
@@ -63,15 +64,29 @@ android {
             dimension "channel"
         }
     }
-
 }
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${support_version}"
-    implementation "com.android.support.constraint:constraint-layout:${constraint_layout_version}"
-
-    implementation project(path: ':component:map')
-
-
+    implementation "com.android.support:appcompat-v7:${v_support}"
+    implementation "com.android.support.constraint:constraint-layout:${v_constraint_layout}"
+    implementation project(path: ':components:map')
+    implementation project(path: ':components:permission')
+    implementation project(path: ':plugins:aop_permission')
 }
+
+aspectjx {
+    //enable false
+    include 'cn.shawn.aop'
+    include 'cn.shawn.aop.permission'
+    include 'cn.shawn.runplus'
+}
+
+
+
+
+
+
+
+

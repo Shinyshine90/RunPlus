@@ -1,0 +1,6 @@
+apply from: '../../config/lib_base.gradle'
+
+dependencies {
+    implementation "com.android.support.constraint:constraint-layout:$v_constraint_layout"
+}
+

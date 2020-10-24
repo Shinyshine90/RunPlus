@@ -1,8 +1,6 @@
 apply from : '../../config/lib_base.gradle'
 
-
-
 dependencies {
     implementation project(path: ':libs:amap')
-    implementation "com.android.support.constraint:constraint-layout:${constraint_layout_version}"
+    implementation "com.android.support.constraint:constraint-layout:${v_constraint_layout}"
 }

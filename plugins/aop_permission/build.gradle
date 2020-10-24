@@ -1,0 +1,1 @@
+apply from : "../../config/aspectj_base.gradle"

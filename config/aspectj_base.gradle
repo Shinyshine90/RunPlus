@@ -26,5 +26,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${v_support}"
+    implementation "com.android.support:appcompat-v7:$v_support"
+    implementation "org.aspectj:aspectjrt:$v_aspectj"
 }

@@ -1,5 +1,6 @@
-
+include ':components:permission'
 include ':app'
-include ':component:map'
+include ':components:map'
 include ':libs:amap'
+include ':plugins:aop_permission'
 

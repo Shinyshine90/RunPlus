@@ -6,8 +6,6 @@ android {
                 AMP_KEY : "67294d1bc8dab257aaa7e6b26866b87d"
         ]
     }
-
-
 }
 
 dependencies {
