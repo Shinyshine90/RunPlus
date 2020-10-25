@@ -1,6 +1,7 @@
-apply from: '../../config/lib_base.gradle'
+apply from: '../../config/aspectj_base.gradle'
 
 dependencies {
+    implementation "com.android.support:appcompat-v7:${v_support}"
     implementation "com.android.support.constraint:constraint-layout:$v_constraint_layout"
 }
 
