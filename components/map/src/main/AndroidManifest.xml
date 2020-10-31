@@ -3,9 +3,12 @@
     package="cn.shawn.map">
 
     <application>
-        <activity android:name=".activity.MapHomeActivity">
+        <activity android:name=".practise.TestLocationActivity"></activity>
+        <activity android:name=".practise.TestMapHomeActivity" />
 
-        </activity>
+        <service
+            android:name="com.amap.api.location.APSService"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>
