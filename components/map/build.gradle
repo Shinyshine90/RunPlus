@@ -2,9 +2,9 @@ apply from : '../../config/lib_base.gradle'
 
 dependencies {
     api project(path: ':libs:amap')
-    implementation "com.android.support.constraint:constraint-layout:${v_constraint_layout}"
+    implementation "androidx.constraintlayout:constraintlayout:$v_constraint_layout"
 
     implementation "io.reactivex.rxjava3:rxjava:$v_rxjava"
     implementation "io.reactivex.rxjava3:rxandroid:$v_rxandroid"
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation "androidx.legacy:legacy-support-v4:$v_support_v4"
 }
