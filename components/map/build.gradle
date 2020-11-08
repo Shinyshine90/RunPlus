@@ -4,7 +4,7 @@ dependencies {
     api project(path: ':libs:amap')
     implementation "androidx.constraintlayout:constraintlayout:$v_constraint_layout"
 
-    implementation "io.reactivex.rxjava3:rxjava:$v_rxjava"
-    implementation "io.reactivex.rxjava3:rxandroid:$v_rxandroid"
+    implementation "io.reactivex.rxjava2:rxjava:$v_rxjava2"
+    implementation "io.reactivex.rxjava2:rxandroid:$v_rxandroid2"
     implementation "androidx.legacy:legacy-support-v4:$v_support_v4"
 }

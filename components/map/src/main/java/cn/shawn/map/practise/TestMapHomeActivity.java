@@ -23,13 +23,13 @@ import com.amap.api.maps.model.particle.SinglePointParticleShape;
 import java.io.File;
 import cn.shawn.map.utils.FileUtil;
 import cn.shawn.map.R;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class TestMapHomeActivity extends AppCompatActivity {
 
@@ -104,7 +104,7 @@ public class TestMapHomeActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onNext(File @NonNull [] files) {
+        public void onNext(@NonNull File[] files) {
             showCustomStyle(files);
             showLocationPoint();
             setUpZoomSize();

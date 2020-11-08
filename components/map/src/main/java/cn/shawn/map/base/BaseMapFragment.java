@@ -26,12 +26,13 @@ import cn.shawn.map.R;
 import cn.shawn.map.base.config.AMapConfig;
 import cn.shawn.map.base.config.AMapStyle;
 import cn.shawn.map.utils.FileUtil;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
+
 
 public abstract class BaseMapFragment extends Fragment {
 

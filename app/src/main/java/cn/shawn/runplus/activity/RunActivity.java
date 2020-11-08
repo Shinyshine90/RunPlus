@@ -3,6 +3,8 @@ package cn.shawn.runplus.activity;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.amap.api.location.AMapLocationListener;
 
 import cn.shawn.map.fragment.TraceMapFragment;
@@ -32,6 +34,7 @@ public class RunActivity extends AppCompatActivity {
         if (traceFragment != null) {
             traceFragment.onLocation(aMapLocation);
         }
+        Log.i("RunActivity", ": "+aMapLocation.toString());
     };
 
     private void initMapFragment() {

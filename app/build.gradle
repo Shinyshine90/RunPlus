@@ -31,6 +31,12 @@ android {
         ndk {
             abiFilters  "armeabi-v7a", "arm64-v8a", "x86","x86_64", "armeabi"
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -68,9 +74,19 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(path: ':libs:base')
+    implementation project(path: ':components:map')
+
     implementation "androidx.appcompat:appcompat:$v_appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$v_constraint_layout"
-    implementation project(path: ':components:map')
+
+    implementation "androidx.room:room-runtime:$v_room"
+    annotationProcessor "androidx.room:room-compiler:$v_room"
+    implementation "androidx.room:room-rxjava2:$v_room"
+
+
+    implementation "io.reactivex.rxjava2:rxjava:$v_rxjava2"
+    implementation "io.reactivex.rxjava2:rxandroid:$v_rxandroid2"
 }
 
 
