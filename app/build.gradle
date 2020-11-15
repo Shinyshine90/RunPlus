@@ -76,11 +76,14 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':libs:base')
     implementation project(path: ':components:map')
+    implementation project(path: ':libs:mock')
 
     implementation "androidx.appcompat:appcompat:$v_appcompat"
+    implementation "androidx.recyclerview:recyclerview:$v_appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$v_constraint_layout"
 
     implementation "androidx.room:room-runtime:$v_room"
+
     annotationProcessor "androidx.room:room-compiler:$v_room"
     implementation "androidx.room:room-rxjava2:$v_room"
 

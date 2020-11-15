@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RunPlus</string>
+    <string name="run_start">开始运动</string>
+    <string name="run_resume">恢复运动</string>
+    <string name="run_stop">结束运动</string>
+    <string name="run_pause">暂停运动</string>
 </resources>

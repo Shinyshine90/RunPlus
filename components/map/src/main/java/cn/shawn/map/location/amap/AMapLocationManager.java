@@ -1,27 +1,12 @@
 package cn.shawn.map.location.amap;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.annotation.NonNull;
-
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 
-import java.util.HashSet;
-import java.util.Set;
+// TODO: 11/14/20 CPU 休眠
 
-public class AMapLocationManager implements IAMapLocationManager, AMapLocationListener {
-
-    private AMapLocationManager() {}
-
-    private static class Holder {
-        @SuppressLint("StaticFieldLeak")
-        static AMapLocationManager sInstance = new AMapLocationManager();
-    }
-
-    public static AMapLocationManager getInstance() {
-        return Holder.sInstance;
-    }
+public class AMapLocationManager implements IAMapLocationManager  {
 
     private Context mContext;
 
@@ -29,39 +14,17 @@ public class AMapLocationManager implements IAMapLocationManager, AMapLocationLi
 
     private AMapLocationHelper mLocationHelper;
 
-    private final Set<AMapLocationListener> mLocationListeners = new HashSet<>();
-
-    public void registerListener(AMapLocationListener listener) {
-        synchronized (mLocationListeners) {
-            mLocationListeners.add(listener);
-        }
-    }
-
-    public void unregisterListener(AMapLocationListener listener) {
-        synchronized (mLocationListeners) {
-            mLocationListeners.remove(listener);
-        }
-    }
-
     @Override
-    public void init(@NonNull Context context) {
+    public void init(@NonNull Context context, @NonNull AMapLocationListener listener) {
         if (checkStatus(Status.INIT)) {
             return;
         }
         mContext = context.getApplicationContext();
-        mLocationHelper = new AMapLocationHelper(mContext, this);
+        mLocationHelper = new AMapLocationHelper(mContext, listener);
         mLocationHelper.initLocation();
         mStatus = Status.READY;
     }
 
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        synchronized (mLocationListeners) {
-            for (AMapLocationListener listener : mLocationListeners) {
-                listener.onLocationChanged(aMapLocation);
-            }
-        }
-    }
 
     @Override
     public void start() {

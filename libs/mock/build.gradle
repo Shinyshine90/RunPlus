@@ -1,0 +1,8 @@
+apply from : '../../config/lib_base.gradle'
+
+dependencies {
+    implementation project(':libs:base')
+    implementation project(':libs:amap')
+    implementation "io.reactivex.rxjava2:rxjava:$v_rxjava2"
+    implementation "io.reactivex.rxjava2:rxandroid:$v_rxandroid2"
+}

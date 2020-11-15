@@ -53,6 +53,12 @@ public abstract class BaseMapFragment extends Fragment {
     private AMapConfig mMapConfig;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getExtra();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return mRoot = inflater.inflate(getLayoutId(), container, false);
     }
@@ -63,6 +69,8 @@ public abstract class BaseMapFragment extends Fragment {
         setupMapView(savedInstanceState);
     }
 
+    protected abstract void getExtra();
+
     @LayoutRes
     protected abstract int getLayoutId();
 
@@ -71,6 +79,8 @@ public abstract class BaseMapFragment extends Fragment {
 
     @IdRes
     protected abstract int getProgressId();
+
+    protected abstract void onMapSetupComplete();
 
     protected AMapConfig createConfig() {
         return AMapConfig.Builder.createDefault().build();
@@ -96,6 +106,7 @@ public abstract class BaseMapFragment extends Fragment {
         setUpZoomSize();
         setupMyLocation();
         setupHighFpsLayer();
+        onMapSetupComplete();
     }
 
     private Disposable loadMapView() {
