@@ -2,19 +2,16 @@ package cn.shawn.mock;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
-
 import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -24,7 +21,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LocationMockManager {
 
-    private LocationMockManager() {}
+    private static final String TAG = "LocationMockManager";
+
+    private LocationMockManager() { }
 
     private static class Holder {
         static LocationMockManager sInstance = new LocationMockManager();
@@ -38,6 +37,42 @@ public class LocationMockManager {
 
     public void init(@NonNull Context context) {
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        try {
+            LocationProvider provider = mLocationManager.getProvider(LocationManager.GPS_PROVIDER);
+            if (provider == null) {
+                mLocationManager.addTestProvider(LocationManager.GPS_PROVIDER,
+                        false,
+                        false,
+                        false,
+                        false,
+                        true,
+                        true,
+                        true,
+                        0,
+                        5);
+            } else {
+                mLocationManager.addTestProvider(provider.getName(),
+                        provider.requiresNetwork(),
+                        provider.requiresSatellite(),
+                        provider.requiresCell(),
+                        provider.hasMonetaryCost(),
+                        provider.supportsAltitude(),
+                        provider.supportsSpeed(),
+                        provider.supportsBearing(),
+                        provider.getPowerRequirement(),
+                        provider.getAccuracy());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "init: add provider error");
+        }
+
+        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            try {
+                mLocationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, true);
+            } catch (Exception e) {
+                Log.e(TAG, "init: enable provider error");
+            }
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -59,13 +94,13 @@ public class LocationMockManager {
 
                     @Override
                     public void onNext(LatLonPoint point) {
-                        Log.i("LocationMockManager", "onNext: "+point.toString());
+                        Log.i("LocationMockManager", "onNext: " + point.toString());
                         mockLocation(new LatLng(point.getLatitude(), point.getLongitude()));
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("LocationMockManager", "onError: "+e.toString());
+                        Log.e("LocationMockManager", "onError: " + e.toString());
                         Toast.makeText(context, "算路失败", Toast.LENGTH_LONG).show();
                     }
 
@@ -77,17 +112,6 @@ public class LocationMockManager {
     }
 
     public void mockLocation(LatLng latLng) {
-        mLocationManager.addTestProvider(LocationManager.GPS_PROVIDER,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                Criteria.NO_REQUIREMENT,
-                Criteria.ACCURACY_COARSE);
-
         Location locationGps = new Location(LocationManager.GPS_PROVIDER);
         locationGps.setLatitude(latLng.latitude);
         locationGps.setLongitude(latLng.longitude);
