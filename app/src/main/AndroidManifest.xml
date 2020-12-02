@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.RecordActivity"></activity>
-        <activity android:name=".activity.RecordsActivity" />
+        <activity android:name=".page.records.RecordsActivity" />
         <activity android:name=".activity.RunActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>

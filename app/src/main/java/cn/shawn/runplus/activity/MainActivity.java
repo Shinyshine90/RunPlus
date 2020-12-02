@@ -11,6 +11,8 @@ import cn.shawn.map.practise.TestLocationActivity;
 import cn.shawn.map.practise.TestMapHomeActivity;
 import cn.shawn.mock.LocationMockManager;
 import cn.shawn.runplus.R;
+import cn.shawn.runplus.page.records.RecordsActivity;
+
 public class MainActivity extends AppCompatActivity  {
 
     @Override
