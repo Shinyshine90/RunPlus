@@ -11,6 +11,7 @@ import cn.shawn.map.practise.TestLocationActivity;
 import cn.shawn.map.practise.TestMapHomeActivity;
 import cn.shawn.mock.LocationMockManager;
 import cn.shawn.runplus.R;
+import cn.shawn.runplus.page.mocklocation.MockLocationActivity;
 import cn.shawn.runplus.page.records.RecordsActivity;
 
 public class MainActivity extends AppCompatActivity  {
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity  {
           LocationMockManager.getInstance().init(this);
           LocationMockManager.getInstance().startMockRoute(this);
           Toast.makeText(this,"Mock启动", Toast.LENGTH_SHORT).show();
-      }
+      },
+      v -> startActivity(new Intent(this, MockLocationActivity.class))
     };
 
 }

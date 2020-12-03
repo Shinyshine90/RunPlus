@@ -111,6 +111,39 @@ public class LocationMockManager {
                 });
     }
 
+    public void startMockLocation(LatLng latLng) {
+        Observable.create((ObservableOnSubscribe<LatLng>) emitter -> {
+            for (int i = 0; i < 10000; i++) {
+                emitter.onNext(latLng);
+                Thread.sleep(1000);
+            }
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LatLng>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(LatLng point) {
+                        Log.i("LocationMockManager", "onNext: " + point.toString());
+                        mockLocation(point);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("LocationMockManager", "onError: " + e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     public void mockLocation(LatLng latLng) {
         Location locationGps = new Location(LocationManager.GPS_PROVIDER);
         locationGps.setLatitude(latLng.latitude);
