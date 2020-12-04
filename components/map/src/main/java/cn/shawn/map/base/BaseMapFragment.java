@@ -1,5 +1,6 @@
 package cn.shawn.map.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
@@ -81,6 +82,17 @@ public abstract class BaseMapFragment extends Fragment {
     protected abstract int getProgressId();
 
     protected abstract void onMapSetupComplete();
+
+    protected View getRootView() {
+        return mRoot;
+    }
+
+    @NonNull
+    @Override
+    public Context getContext() {
+        Context context = super.getContext();
+        return context == null ? mRoot.getContext() : context;
+    }
 
     protected AMapConfig createConfig() {
         return AMapConfig.Builder.createDefault().build();

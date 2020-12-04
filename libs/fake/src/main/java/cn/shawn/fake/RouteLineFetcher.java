@@ -1,4 +1,4 @@
-package cn.shawn.mock;
+package cn.shawn.fake;
 
 import android.content.Context;
 import android.util.Log;

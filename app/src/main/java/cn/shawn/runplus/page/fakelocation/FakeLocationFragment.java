@@ -1,4 +1,4 @@
-package cn.shawn.runplus.page.mocklocation;
+package cn.shawn.runplus.page.fakelocation;
 
 import android.graphics.Point;
 import android.util.Log;
@@ -6,23 +6,20 @@ import android.util.Log;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
-
 import cn.shawn.map.base.BaseMapFragment;
 import cn.shawn.map.base.config.AMapConfig;
 import cn.shawn.map.base.config.AMapStyle;
-import cn.shawn.mock.LocationMockManager;
 import cn.shawn.runplus.R;
 import cn.shawn.runplus.utils.SpUtil;
 
-public class LocationMapFragment extends BaseMapFragment {
+public class FakeLocationFragment extends BaseMapFragment {
 
     @Override
-    protected void getExtra() {
-    }
+    protected void getExtra() { }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_location;
+        return R.layout.fragment_fake_location;
     }
 
     @Override
@@ -46,18 +43,17 @@ public class LocationMapFragment extends BaseMapFragment {
     @Override
     protected void onMapSetupComplete() {
         initStyle();
-        getView().findViewById(R.id.btn_confirm).setOnClickListener(
+        getRootView().findViewById(R.id.btn_confirm).setOnClickListener(
                 v -> {
                     LatLng latLng = getMapCenterPoint();
                     Log.i("LocationMapFragment", "onMapSetupComplete: " + latLng);
                     SpUtil.saveMockLocation(getContext(), latLng);
                 }
         );
-        getView().findViewById(R.id.btn_start_mock).setOnClickListener(
+        getRootView().findViewById(R.id.btn_start_mock).setOnClickListener(
                 v -> {
                     LatLng latLng = SpUtil.getMockLocation(getContext());
-                    LocationMockManager.getInstance().init(getContext());
-                    LocationMockManager.getInstance().startMockLocation(latLng);
+                    ((FakeLocationActivity)getActivity()).startFakeLocation(latLng);
                 }
         );
     }

@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.shawn.fake">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"
+        tools:ignore="MockLocation,ProtectedPermissions"/>
+
+    <application >
+        <service
+            android:name="cn.shawn.fake.FakeGpsService"
+            android:foregroundServiceType="location"
+            android:exported="false"/>
+    </application>
+</manifest>

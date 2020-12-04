@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".page.mocklocation.MockLocationActivity"/>
+        <activity android:name=".page.fakelocation.FakeLocationActivity"/>
         <activity android:name=".activity.RecordActivity" />
         <activity android:name=".page.records.RecordsActivity" />
         <activity android:name=".activity.RunActivity" />
@@ -19,6 +19,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter >
+                <action android:name="cn.shawn.runplus.MainActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
     </application>

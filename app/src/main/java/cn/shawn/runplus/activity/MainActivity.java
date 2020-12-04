@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import cn.shawn.map.practise.TestLocationActivity;
 import cn.shawn.map.practise.TestMapHomeActivity;
-import cn.shawn.mock.LocationMockManager;
+import cn.shawn.fake.FakeLocationHelper;
 import cn.shawn.runplus.R;
-import cn.shawn.runplus.page.mocklocation.MockLocationActivity;
+import cn.shawn.runplus.page.fakelocation.FakeLocationActivity;
 import cn.shawn.runplus.page.records.RecordsActivity;
 
 public class MainActivity extends AppCompatActivity  {
@@ -37,11 +37,12 @@ public class MainActivity extends AppCompatActivity  {
       v -> startActivity(new Intent(this, RunActivity.class)),
       v -> startActivity(new Intent(this, RecordsActivity.class)),
       v -> {
-          LocationMockManager.getInstance().init(this);
-          LocationMockManager.getInstance().startMockRoute(this);
+          FakeLocationHelper fakeLocationHelper = new FakeLocationHelper();
+          fakeLocationHelper.init(this);
+          fakeLocationHelper.startFakeTrack(this);
           Toast.makeText(this,"Mock启动", Toast.LENGTH_SHORT).show();
       },
-      v -> startActivity(new Intent(this, MockLocationActivity.class))
+      v -> startActivity(new Intent(this, FakeLocationActivity.class))
     };
 
 }

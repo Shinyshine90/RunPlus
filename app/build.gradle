@@ -80,15 +80,16 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':libs:base')
     implementation project(path: ':components:map')
-    implementation project(path: ':libs:mock')
+    implementation project(path: ':libs:fake')
 
     implementation "androidx.appcompat:appcompat:$v_appcompat"
     implementation "androidx.recyclerview:recyclerview:$v_recyclerview"
     implementation "androidx.constraintlayout:constraintlayout:$v_constraint_layout"
 
     implementation "androidx.room:room-runtime:$v_room"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "androidx.lifecycle:lifecycle-extensions:$v_lifecycle_extensions"
+
+    implementation "com.google.code.gson:gson:$v_gson"
 
     annotationProcessor "androidx.room:room-compiler:$v_room"
     implementation "androidx.room:room-rxjava2:$v_room"

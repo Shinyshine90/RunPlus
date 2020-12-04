@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_title">title</string>
+    <string name="notification_message">message</string>
+    <string name="ticker_text">ticker</string>
+    <string name="channel_name">fake_service</string>
+    <string name="channel_description">fake_location_desc</string>
+</resources>

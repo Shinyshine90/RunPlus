@@ -24,7 +24,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.Holder> {
     @Override
     public RecordAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RecordAdapter.Holder(DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()), R.layout.item_record, parent, false));
+                LayoutInflater.from(parent.getContext()), R.layout.item_record, parent, false), mListener);
     }
 
     @Override
@@ -41,9 +41,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.Holder> {
 
         ItemRecordBinding mDataBinding;
 
-        public Holder(ItemRecordBinding binding) {
+        OnItemClickListener mItemClickListener;
+
+        public Holder(ItemRecordBinding binding, OnItemClickListener itemClickListener) {
             super(binding.getRoot());
             mDataBinding = binding;
+            mItemClickListener = itemClickListener;
+            itemView.setOnClickListener(v ->
+                mItemClickListener.onItemClick(mDataBinding.getRecord()));
         }
     }
 

@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import cn.shawn.base.repository.RepositoryCenter;
 import cn.shawn.runplus.database.RunRecord;
 import cn.shawn.runplus.database.RunRecordRepository;
@@ -30,7 +29,6 @@ public class RecordsViewModel extends ViewModel {
         Disposable d = RepositoryCenter.getInstance().getRepository(RunRecordRepository.class)
                 .runRecordDao()
                 .loadAll()
-                .delay(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> isLoading.postValue(true))
                 .doAfterTerminate(() -> isLoading.postValue(false))

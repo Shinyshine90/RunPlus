@@ -1,0 +1,1 @@
+apply from : "../../config/lib_base.gradle"

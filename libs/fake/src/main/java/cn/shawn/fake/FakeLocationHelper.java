@@ -1,4 +1,4 @@
-package cn.shawn.mock;
+package cn.shawn.fake;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,27 +11,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import cn.shawn.component.map.utils.GCJ2WGSUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class LocationMockManager {
+public class FakeLocationHelper {
 
     private static final String TAG = "LocationMockManager";
 
-    private LocationMockManager() { }
+    private static final int TYPE_FAKE_LOCATION = 0;
 
-    private static class Holder {
-        static LocationMockManager sInstance = new LocationMockManager();
-    }
+    private static final int TYPE_FAKE_ROUTE = 1;
 
-    public static LocationMockManager getInstance() {
-        return Holder.sInstance;
-    }
+    private Map<Integer, Disposable> mRunningTask = new ConcurrentHashMap<>();
 
     private LocationManager mLocationManager;
 
@@ -76,75 +77,79 @@ public class LocationMockManager {
     }
 
     @SuppressLint("CheckResult")
-    public void startMockRoute(@NonNull Context context) {
+    public void startFakeTrack(@NonNull Context context) {
         Observable.create((ObservableOnSubscribe<LatLonPoint>) emitter -> {
             List<LatLonPoint> points = new RouteLineFetcher(context).fetch();
             for (LatLonPoint point : points) {
-                Thread.sleep(3000L);
+                Thread.sleep(1000L);
                 emitter.onNext(point);
             }
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LatLonPoint>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        releaseTask(TYPE_FAKE_ROUTE);
+                        mRunningTask.put(TYPE_FAKE_ROUTE, d);
                     }
 
                     @Override
                     public void onNext(LatLonPoint point) {
                         Log.i("LocationMockManager", "onNext: " + point.toString());
-                        mockLocation(new LatLng(point.getLatitude(), point.getLongitude()));
+                        LatLng latLng = new LatLng(point.getLatitude(), point.getLongitude());
+                        postFakeLocation(GCJ2WGSUtils.convertToWGSLat(latLng));
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("LocationMockManager", "onError: " + e.toString());
                         Toast.makeText(context, "算路失败", Toast.LENGTH_LONG).show();
+                        mRunningTask.remove(TYPE_FAKE_ROUTE);
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mRunningTask.remove(TYPE_FAKE_ROUTE);
                     }
                 });
     }
 
-    public void startMockLocation(LatLng latLng) {
+    public void startFakeLocation(LatLng latLng) {
+        LatLng wcjlatLng = GCJ2WGSUtils.convertToWGSLat(latLng);
         Observable.create((ObservableOnSubscribe<LatLng>) emitter -> {
-            for (int i = 0; i < 10000; i++) {
-                emitter.onNext(latLng);
-                Thread.sleep(1000);
+            for (int i = 0; i < Integer.MAX_VALUE / 2; i++) {
+                emitter.onNext(wcjlatLng);
+                Thread.sleep(100);
             }
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LatLng>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        releaseTask(TYPE_FAKE_LOCATION);
+                        mRunningTask.put(TYPE_FAKE_LOCATION, d);
                     }
 
                     @Override
                     public void onNext(LatLng point) {
                         Log.i("LocationMockManager", "onNext: " + point.toString());
-                        mockLocation(point);
+                        postFakeLocation(point);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("LocationMockManager", "onError: " + e.toString());
+                        mRunningTask.remove(TYPE_FAKE_LOCATION);
                     }
 
                     @Override
                     public void onComplete() {
-
+                        mRunningTask.remove(TYPE_FAKE_LOCATION);
                     }
                 });
     }
 
-    public void mockLocation(LatLng latLng) {
+    public void postFakeLocation(LatLng latLng) {
         Location locationGps = new Location(LocationManager.GPS_PROVIDER);
         locationGps.setLatitude(latLng.latitude);
         locationGps.setLongitude(latLng.longitude);
@@ -152,5 +157,19 @@ public class LocationMockManager {
         locationGps.setTime(SystemClock.elapsedRealtime());
         locationGps.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
         mLocationManager.setTestProviderLocation(LocationManager.GPS_PROVIDER, locationGps);
+    }
+
+    public void releaseTask(int type) {
+        Disposable task = mRunningTask.get(type);
+        if (task != null && !task.isDisposed()) {
+            task.dispose();
+        }
+    }
+
+    public void release() {
+        Collection<Disposable> tasks = mRunningTask.values();
+        for (Disposable d : tasks) {
+            if (!d.isDisposed()) d.dispose();
+        }
     }
 }

@@ -2,8 +2,7 @@ package cn.shawn.runplus.utils;
 
 import android.content.Context;
 import com.amap.api.maps.model.LatLng;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
 
 public class SpUtil {
 
@@ -11,32 +10,18 @@ public class SpUtil {
 
     private static final String KEY_MOCK_LOCATION = "mock_location";
 
-    public static void saveMockLocation(Context context, LatLng latLng) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("latitude", latLng.latitude);
-            jsonObject.put("longitude", latLng.longitude);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private static final Gson sGSon = new Gson();
 
+    public static void saveMockLocation(Context context, LatLng latLng) {
         context.getSharedPreferences(TABLE, Context.MODE_PRIVATE)
                 .edit()
-                .putString(KEY_MOCK_LOCATION, jsonObject.toString())
+                .putString(KEY_MOCK_LOCATION, sGSon.toJson(latLng))
                 .apply();
-
     }
 
     public static LatLng getMockLocation(Context context) {
         String json = context.getSharedPreferences(TABLE, Context.MODE_PRIVATE)
-                .getString(KEY_MOCK_LOCATION, "");
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            return new LatLng(jsonObject.getDouble("latitude"),
-                    jsonObject.getDouble("longitude"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
+                .getString(KEY_MOCK_LOCATION, "{}");
+        return sGSon.fromJson(json, LatLng.class);
     }
 }
