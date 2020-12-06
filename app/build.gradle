@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
 
@@ -97,6 +99,10 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:$v_rxjava2"
     implementation "io.reactivex.rxjava2:rxandroid:$v_rxandroid2"
+
+    implementation "androidx.core:core-ktx:$v_core_ktx"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$v_lifecycle_viewmodel_ktx"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$v_kotlin_plugin"
 }
 
 
