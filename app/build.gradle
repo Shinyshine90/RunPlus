@@ -81,8 +81,11 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':libs:base')
-    implementation project(path: ':components:map')
     implementation project(path: ':libs:fake')
+    implementation project(path: ':components:map')
+    implementation project(path: ':components:im')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$v_kotlin_plugin"
 
     implementation "androidx.appcompat:appcompat:$v_appcompat"
     implementation "androidx.recyclerview:recyclerview:$v_recyclerview"
@@ -102,7 +105,7 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$v_core_ktx"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$v_lifecycle_viewmodel_ktx"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$v_kotlin_plugin"
+
 }
 
 

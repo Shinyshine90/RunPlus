@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="im_chat_message_bg_common_light">#ffffff</color>
+    <color name="im_chat_message_bg_press_light">#E9E9E9</color>
+
+    <color name="im_chat_message_bg_common_dark">#FFDAC6</color>
+    <color name="im_chat_message_bg_press_dark">#F7C3A8</color>
+</resources>

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import cn.shawn.im.ChatActivity;
 import cn.shawn.map.practise.TestLocationActivity;
 import cn.shawn.map.practise.TestMapHomeActivity;
 import cn.shawn.fake.FakeLocationHelper;
@@ -21,7 +22,6 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupClickListener();
-
     }
 
     private void setupClickListener() {
@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity  {
           fakeLocationHelper.startFakeTrack(this);
           Toast.makeText(this,"Mock启动", Toast.LENGTH_SHORT).show();
       },
-      v -> startActivity(new Intent(this, FakeLocationActivity.class))
+      v -> startActivity(new Intent(this, FakeLocationActivity.class)),
+      v -> startActivity(new Intent(this, ChatActivity.class))
     };
 
 }
